@@ -1,0 +1,230 @@
+CREATE DATABASE Records;
+
+CREATE TABLE Staffs(
+	ID bigserial,
+	first_name varchar(50),
+	last_name varchar(30),
+	subject char(25),
+	hire_date date,
+	salary numeric
+
+);
+
+SELECT * FROM staffs
+
+drop table staffs
+
+
+insert into staffs (first_name, last_name, subject, hire_date, salary)
+values('John', 'Big', 'Power BI', '2012-04-28', 220000),
+('Emeka', 'Samuel', 'SQL', '2022-07-16', 250000),
+('Joy', 'Emmanuel', 'Python', '2021-01-19', 180000);
+
+select * from staffs
+
+SELECT first_name, hire_date, salary FROM staffs
+
+select * from staffs
+
+SELECT first_name, hire_date, salary FROM staffs where first_name  Like 'J%' AND salary > 150000
+
+SELECT hire_date, salary FROM staffs where salary > 150000; 
+
+SELECT first_name, last_name, hire_date, salary FROM staffs WHERE first_name LIKE 'J%';
+
+SELECT * FROM staffs WHERE first_name LIKE 'J_ne';
+
+SELECT * FROM staffs WHERE first_name LIKE 'J%';
+
+SELECT * FROM staffs WHERE first_name IN ('Jackson', 'Emmanuel','Emeka');
+
+SELECT * FROM staffs WHERE first_name ILIKE 'J_hn';
+
+SELECT * FROM staffs WHERE NOT first_name = 'John';
+
+SELECT * FROM staffs WHERE id=2
+
+SELECT * FROM staffs WHERE NOT salary=150000 AND NOT hire_date ='2021_04_28';
+
+SELECT * FROM staffs WHERE first_name = 'John' AND salary = 100000 OR NOT last_name ='Emeka';
+
+SELECT * FROM staffs WHERE hire_date > '2012-04-28' ORDER BY first_name DESC;
+
+SELECT * FROM staffs ORDER BY first_name ASC, salary DESC;
+
+SELECT * FROM staffs ORDER BY salary DESC
+
+ALTER TABLE staffs RENAME TO Teachers;
+
+ALTER TABLE Teachers ADD COLUMN School varchar(50);
+
+ALTER TABLE Teacher ALTER COLUMN Students TYPE varchar(30);
+
+CREATE TABLE Char_table(
+     var_colume varchar(10),
+	char_column char(10),
+	text_column text
+);
+
+INSERT INTO Char_table
+VALUES ('abc','abc','abc'),
+('defgh','defgh','defgh');
+
+SELECT * FROM Char_table
+
+COPY Char_table TO 'C:\Users\Public\SQL Export\SQL lesson.xls'
+WITH (FORMAT CSV, HEADER, DELIMITER '|');
+
+CREATE  Number_table()
+
+SELECT now()
+
+--------------IMPORTING DATA TO SQL-------------------------
+---
+-----importing and exporting data------
+---to import data, there are three things you will do
+----1. prepare the source data in the form of a delimited textfile
+--a delimited textfile contains rows of data
+---in each row, 
+----a character separates or delimits each column
+---different character can be used as delimiter ranging from ampersand
+--to pipes but the most common is the comma,(comma separated value) 
+
+---2. create a table to store the data
+--the data set we shall be using for this is an extract of the US 2010 census. the 
+---official census data dictionary for this data set found at
+http://www.census.gov/prod/cen2010/doc/pl94-171.pdf,
+---although the full set of 2010 census data contains 291
+---of the these columns. But we will be using only 78
+---3. Write a COPY code to perform the import
+
+CREATE TABLE us_counties_2010 (
+    geo_name varchar(90),                    -- Name of the geography
+    state_us_abbreviation varchar(2),        -- State/U.S. abbreviation
+    summary_level varchar(3),                -- Summary Level
+    region smallint,                         -- Region
+    division smallint,                       -- Division
+    state_fips varchar(2),                   -- State FIPS code
+    county_fips varchar(3),                  -- County code
+    area_land bigint,                        -- Area (Land) in square meters
+    area_water bigint,                        -- Area (Water) in square meters
+    population_count_100_percent integer,    -- Population count (100%)
+    housing_unit_count_100_percent integer,  -- Housing Unit count (100%)
+    internal_point_lat numeric(10,7),        -- Internal point (latitude)
+    internal_point_lon numeric(10,7),        -- Internal point (longitude)
+
+    -- This section is referred to as P1. Race:
+    p0010001 integer,   -- Total population
+    p0010002 integer,   -- Population of one race:
+    p0010003 integer,       -- White Alone
+    p0010004 integer,       -- Black or African American alone
+    p0010005 integer,       -- American Indian and Alaska Native alone
+    p0010006 integer,       -- Asian alone
+    p0010007 integer,       -- Native Hawaiian and Other Pacific Islander alone
+    p0010008 integer,       -- Some Other Race alone
+    p0010009 integer,   -- Population of two or more races
+    p0010010 integer,   -- Population of two races:
+    p0010011 integer,       -- White; Black or African American
+    p0010012 integer,       -- White; American Indian and Alaska Native
+    p0010013 integer,       -- White; Asian
+    p0010014 integer,       -- White; Native Hawaiian and Other Pacific Islander
+    p0010015 integer,       -- White; Some Other Race
+    p0010016 integer,       -- Black or African American; American Indian and Alaska Native
+    p0010017 integer,       -- Black or African American; Asian
+    p0010018 integer,       -- Black or African American; Native Hawaiian and Other Pacific Islander
+    p0010019 integer,       -- Black or African American; Some Other Race
+    p0010020 integer,       -- American Indian and Alaska Native; Asian
+    p0010021 integer,       -- American Indian and Alaska Native; Native Hawaiian and Other Pacific Islander
+    p0010022 integer,       -- American Indian and Alaska Native; Some Other Race
+    p0010023 integer,       -- Asian; Native Hawaiian and Other Pacific Islander
+    p0010024 integer,       -- Asian; Some Other Race
+    p0010025 integer,       -- Native Hawaiian and Other Pacific Islander; Some Other Race
+    p0010026 integer,   -- Population of three races
+    p0010047 integer,   -- Population of four races
+    p0010063 integer,   -- Population of five races
+    p0010070 integer,   -- Population of six races
+
+    -- This section is referred to as P2. HISPANIC OR LATINO, AND NOT HISPANIC OR LATINO BY RACE
+    p0020001 integer,   -- Total
+    p0020002 integer,   -- Hispanic or Latino
+    p0020003 integer,   -- Not Hispanic or Latino:
+    p0020004 integer,   -- Population of one race:
+    p0020005 integer,       -- White Alone
+    p0020006 integer,       -- Black or African American alone
+    p0020007 integer,       -- American Indian and Alaska Native alone
+    p0020008 integer,       -- Asian alone
+    p0020009 integer,       -- Native Hawaiian and Other Pacific Islander alone
+    p0020010 integer,       -- Some Other Race alone
+    p0020011 integer,   -- Two or More Races
+    p0020012 integer,   -- Population of two races
+    p0020028 integer,   -- Population of three races
+    p0020049 integer,   -- Population of four races
+    p0020065 integer,   -- Population of five races
+    p0020072 integer,   -- Population of six races
+
+    -- This section is referred to as P3. RACE FOR THE POPULATION 18 YEARS AND OVER
+    p0030001 integer,   -- Total
+    p0030002 integer,   -- Population of one race:
+    p0030003 integer,       -- White alone
+    p0030004 integer,       -- Black or African American alone
+    p0030005 integer,       -- American Indian and Alaska Native alone
+    p0030006 integer,       -- Asian alone
+    p0030007 integer,       -- Native Hawaiian and Other Pacific Islander alone
+    p0030008 integer,       -- Some Other Race alone
+    p0030009 integer,   -- Two or More Races
+    p0030010 integer,   -- Population of two races
+    p0030026 integer,   -- Population of three races
+    p0030047 integer,   -- Population of four races
+    p0030063 integer,   -- Population of five races
+    p0030070 integer,   -- Population of six races
+
+    -- This section is referred to as P4. HISPANIC OR LATINO, AND NOT HISPANIC OR LATINO BY RACE
+    -- FOR THE POPULATION 18 YEARS AND OVER
+    p0040001 integer,   -- Total
+    p0040002 integer,   -- Hispanic or Latino
+    p0040003 integer,   -- Not Hispanic or Latino:
+    p0040004 integer,   -- Population of one race:
+    p0040005 integer,   -- White alone
+    p0040006 integer,   -- Black or African American alone
+    p0040007 integer,   -- American Indian and Alaska Native alone
+    p0040008 integer,   -- Asian alone
+    p0040009 integer,   -- Native Hawaiian and Other Pacific Islander alone
+    p0040010 integer,   -- Some Other Race alone
+    p0040011 integer,   -- Two or More Races
+    p0040012 integer,   -- Population of two races
+    p0040028 integer,   -- Population of three races
+    p0040049 integer,   -- Population of four races
+    p0040065 integer,   -- Population of five races
+    p0040072 integer,   -- Population of six races
+
+    -- This section is referred to as H1. OCCUPANCY STATUS
+    h0010001 integer,   -- Total housing units
+    h0010002 integer,   -- Occupied
+    h0010003 integer    -- Vacant
+);
+
+-----checking the table we just created---
+SELECT * FROM us_counties_2010;
+
+-----filling-in the table
+COPY us_counties_2010
+FROM 'C:\Users\Public\SQL Export\us_counties_2010 (1).csv'
+WITH (FORMAT CSV, HEADER);
+
+
+SELECT geo_name, state_us_abbreviation, area_land
+FROM us_counties_2010
+ORDER BY area_land DESC
+LIMIT 3;
+
+
+-------------------------EXPORTING PARTICULAR COLUMNS-----------------
+--For one reason or the other, you don't always want to export out all the columns in your dataset
+----to achieve this, we can export all the selected columns by listing 
+----their names in a bracket after the table name.
+
+COPY us_counties_2010(geo_name, internal_point_lat, internal_point_lon)
+TO 'C:\Users\Public\SQL Export\sorted files.CSV'
+WITH(FORMAT CSV, HEADER, DELIMITER ',');
+
+
